@@ -5,8 +5,8 @@ drop table city;
 create table city(
     id int not null auto_increment,
     name varchar(45) not null,
-    latitude int,
-    longitude int,
+    latitude double,
+    longitude double,
     primary key(id)
 );
 
