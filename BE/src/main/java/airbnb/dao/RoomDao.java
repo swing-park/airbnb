@@ -38,9 +38,12 @@ public class RoomDao {
     }
 
     public List<Room> findByCityIdAndSchedule(Long cityId, Schedule schedule) {
-        String sql = "SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax FROM room AS a left join reservation AS b ON a.id = b.room_id " +
-                "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut)))" +
-                "AND (a.city_id = :cityId)";
+        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+                "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut))) ");
+        if(cityId != null){
+            sql.append("AND (a.city_id = :cityId)");
+        }
+
         LocalDate chekIn = schedule.getCheckIn();
         LocalDate chekOut = schedule.getCheckOut();
 
@@ -48,7 +51,7 @@ public class RoomDao {
         parameter.addValue("checkIn", chekIn);
         parameter.addValue("checkOut", chekOut);
 
-        List<Room> rooms = jdbcTemplate.query(sql, parameter, roomMapper);
+        List<Room> rooms = jdbcTemplate.query(sql.toString(), parameter, roomMapper);
         rooms.forEach(room -> room.setImages(imageDao.findByRoomId(room.getId())));
         return rooms;
     }
