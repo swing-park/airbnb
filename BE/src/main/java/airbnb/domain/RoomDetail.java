@@ -1,5 +1,7 @@
 package airbnb.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RoomDetail {
     private boolean oneRoom;
     private int bedCount;
@@ -7,7 +9,8 @@ public class RoomDetail {
     private boolean hairDryer;
     private boolean airConditioner;
     private boolean wiFi;
-
+    private boolean kitchen;
+    private int maxPeople;
 
     public RoomDetail(Builder builder) {
         this.oneRoom = builder.oneRoom;
@@ -16,6 +19,8 @@ public class RoomDetail {
         this.hairDryer = builder.hairDryer;
         this.airConditioner = builder.airConditioner;
         this.wiFi = builder.wiFi;
+        this.maxPeople = builder.maxPeople;
+        this.kitchen = builder.kitchen;
     }
 
     public static class Builder {
@@ -25,7 +30,14 @@ public class RoomDetail {
         private boolean hairDryer;
         private boolean airConditioner;
         private boolean wiFi;
+        private int maxPeople;
+        private final boolean kitchen = true;
 
+
+        public Builder maxPeople(int maxPeople) {
+            this.maxPeople = maxPeople;
+            return this;
+        }
 
         public Builder oneRoom(boolean oneRoom) {
             this.oneRoom = oneRoom;
@@ -84,5 +96,13 @@ public class RoomDetail {
 
     public boolean isWiFi() {
         return wiFi;
+    }
+
+    public int getMaxPeople() {
+        return maxPeople;
+    }
+
+    public boolean isKitchen() {
+        return kitchen;
     }
 }

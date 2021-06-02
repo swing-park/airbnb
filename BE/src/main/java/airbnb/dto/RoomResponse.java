@@ -17,9 +17,6 @@ public class RoomResponse {
     private final int reviewCount;
     private final Tax tax;
 
-    @JsonProperty(value = "people")
-    private final int maxPeopleCount;
-
     @JsonProperty(value = "detail")
     private final RoomDetail roomDetail;
 
@@ -34,7 +31,6 @@ public class RoomResponse {
         this.reviewCount = builder.reviewCount;
         this.tax = builder.tax;
         this.roomDetail = builder.roomDetail;
-        this.maxPeopleCount = builder.maxPeopleCount;
     }
 
     public static class Builder {
@@ -48,7 +44,6 @@ public class RoomResponse {
         private Tax tax;
         private Host host;
         private RoomDetail roomDetail;
-        private int maxPeopleCount;
 
         public Builder roomId(Long roomId) {
             this.roomId = roomId;
@@ -100,10 +95,6 @@ public class RoomResponse {
             return this;
         }
 
-        public Builder maxPeopleCount(int maxPeopleCount) {
-            this.maxPeopleCount = maxPeopleCount;
-            return this;
-        }
 
         public RoomResponse build() {
             return new RoomResponse(this);
@@ -152,7 +143,7 @@ public class RoomResponse {
 
     public static RoomResponse of(Room room) {
         return new Builder().roomId(room.getId()).price(room.getPrice()).title(room.getTitle())
-                .description(room.getDescription()).maxPeopleCount(room.getMaxPeopleCount()).tax(room.getTax())
+                .description(room.getDescription()).tax(room.getTax())
                 .roomDetail(room.getRoomDetail()).images(ImageResponse.of(room.getImages())).build();
     }
 }

@@ -12,11 +12,12 @@ public class CityDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final ImageDao imageDao;
-    private final CityMapper cityMapper = new CityMapper();
+    private final CityMapper cityMapper;
 
-    public CityDao(JdbcTemplate jdbcTemplate, ImageDao imageDao) {
+    public CityDao(JdbcTemplate jdbcTemplate, ImageDao imageDao, CityMapper cityMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.imageDao = imageDao;
+        this.cityMapper = cityMapper;
     }
 
     public List<City> findAll() {

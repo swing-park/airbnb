@@ -3,11 +3,12 @@ package airbnb.mapper;
 import airbnb.domain.City;
 import airbnb.domain.Location;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+@Component
 public class CityMapper implements RowMapper<City> {
 
     @Override

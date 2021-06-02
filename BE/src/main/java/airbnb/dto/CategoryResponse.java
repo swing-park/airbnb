@@ -9,7 +9,7 @@ public class CategoryResponse {
     @JsonIgnore
     private final Long id;
 
-    @JsonProperty(value = "Category")
+    @JsonProperty(value = "category")
     private final String name;
     private final String image;
 
