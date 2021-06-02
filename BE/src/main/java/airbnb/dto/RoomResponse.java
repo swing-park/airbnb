@@ -1,5 +1,6 @@
 package airbnb.dto;
 
+import airbnb.domain.Location;
 import airbnb.domain.Room;
 import airbnb.domain.RoomDetail;
 import airbnb.domain.Tax;
@@ -16,6 +17,7 @@ public class RoomResponse {
     private final int grade;
     private final int reviewCount;
     private final Tax tax;
+    private final Location location;
 
     @JsonProperty(value = "detail")
     private final RoomDetail roomDetail;
@@ -31,6 +33,7 @@ public class RoomResponse {
         this.reviewCount = builder.reviewCount;
         this.tax = builder.tax;
         this.roomDetail = builder.roomDetail;
+        this.location = builder.location;
     }
 
     public static class Builder {
@@ -44,9 +47,15 @@ public class RoomResponse {
         private Tax tax;
         private Host host;
         private RoomDetail roomDetail;
+        private Location location;
 
         public Builder roomId(Long roomId) {
             this.roomId = roomId;
+            return this;
+        }
+
+        public Builder location(Location location){
+            this.location = location;
             return this;
         }
 
@@ -141,9 +150,13 @@ public class RoomResponse {
         return roomDetail;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
     public static RoomResponse of(Room room) {
         return new Builder().roomId(room.getId()).price(room.getPrice()).title(room.getTitle())
-                .description(room.getDescription()).tax(room.getTax())
+                .description(room.getDescription()).tax(room.getTax()).location(room.getLocation())
                 .roomDetail(room.getRoomDetail()).images(ImageResponse.of(room.getImages())).build();
     }
 }

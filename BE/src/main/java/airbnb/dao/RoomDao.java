@@ -55,7 +55,7 @@ public class RoomDao {
     }
 
     public List<Room> findSearchRooms(Long cityId, Schedule schedule, Cost cost, int reservationPeopleCount) {
-        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude FROM room AS a left join reservation AS b ON a.id = b.room_id " +
                 "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut))) " +
                 "AND (a.price between :minCost AND :maxCost) " +
                 "AND (a.people >= :reservationPeopleCount) ");
