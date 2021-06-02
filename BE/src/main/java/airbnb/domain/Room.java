@@ -17,8 +17,6 @@ public class Room {
     private Tax tax;
     private List<Image> images;
     private Location location;
-
-    @Value(value = "hostUser_id")
     private String hostUserId;
 
     private Room(Builder builder) {
