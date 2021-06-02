@@ -1,7 +1,9 @@
 package airbnb.Service;
 
 import airbnb.dao.RoomDao;
+import airbnb.dao.UserDao;
 import airbnb.domain.Room;
+import airbnb.domain.User;
 import airbnb.dto.PriceRequest;
 import airbnb.dto.RoomResponse;
 import airbnb.dto.RoomSearchRequest;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 public class RoomService {
 
     private final RoomDao roomDao;
+    private final UserDao userDao;
 
-    public RoomService(RoomDao roomDao) {
+    public RoomService(RoomDao roomDao, UserDao userDao) {
         this.roomDao = roomDao;
+        this.userDao = userDao;
     }
 
     public List<Integer> findAllRoomPrice() {
@@ -36,6 +40,6 @@ public class RoomService {
     public List<RoomResponse> SearchRoomToRoomResponseList(RoomSearchRequest roomSearchRequest) {
         List<Room> rooms = roomDao.findSearchRooms(roomSearchRequest.getCityId(), roomSearchRequest.getSchedule(),
                 roomSearchRequest.getCost(), roomSearchRequest.getReservationPeopleCount());
-        return rooms.stream().map(RoomResponse::of).collect(Collectors.toList());
+        return rooms.stream().map(room -> RoomResponse.of(room,userDao.findById(room.getHostUserId()))).collect(Collectors.toList());
     }
 }

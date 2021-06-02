@@ -14,6 +14,7 @@ public class RoomResponse {
     private final int reviewCount;
     private final Tax tax;
     private final Location location;
+    private final User host;
 
     @JsonProperty(value = "detail")
     private final RoomDetail roomDetail;
@@ -29,6 +30,7 @@ public class RoomResponse {
         this.tax = builder.tax;
         this.roomDetail = builder.roomDetail;
         this.location = builder.location;
+        this.host = builder.host;
     }
 
     public static class Builder {
@@ -42,6 +44,7 @@ public class RoomResponse {
         private Tax tax;
         private RoomDetail roomDetail;
         private Location location;
+        private User host;
 
         public Builder roomId(Long roomId) {
             this.roomId = roomId;
@@ -93,6 +96,11 @@ public class RoomResponse {
             return this;
         }
 
+        public Builder host(User host){
+            this.host = host;
+            return this;
+        }
+
 
         public RoomResponse build() {
             return new RoomResponse(this);
@@ -139,9 +147,13 @@ public class RoomResponse {
         return location;
     }
 
-    public static RoomResponse of(Room room) {
+    public User getHost() {
+        return host;
+    }
+
+    public static RoomResponse of(Room room, User host) {
         return new Builder().roomId(room.getId()).price(room.getPrice()).title(room.getTitle())
                 .description(room.getDescription()).tax(room.getTax()).location(room.getLocation())
-                .roomDetail(room.getRoomDetail()).images(ImageResponse.of(room.getImages())).build();
+                .roomDetail(room.getRoomDetail()).images(ImageResponse.of(room.getImages())).host(host).build();
     }
 }
