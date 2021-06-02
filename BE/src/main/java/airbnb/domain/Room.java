@@ -1,5 +1,7 @@
 package airbnb.domain;
 
+import jdk.nashorn.internal.objects.annotations.Property;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class Room {
     private List<Image> images;
     private Location location;
 
+    @Value(value = "hostUser_id")
+    private String hostUserId;
+
     private Room(Builder builder) {
         this.id = builder.id;
         this.price = builder.price;
@@ -24,6 +29,7 @@ public class Room {
         this.roomDetail = builder.roomDetail;
         this.tax = builder.tax;
         this.location = builder.location;
+        this.hostUserId = builder.hostUserId;
     }
 
     public static class Builder {
@@ -36,6 +42,7 @@ public class Room {
         private RoomDetail roomDetail;
         private Tax tax;
         private Location location;
+        private String hostUserId;
 
         public Builder(Long id) {
             this.id = id;
@@ -66,8 +73,13 @@ public class Room {
             return this;
         }
 
-        public Builder location(Location location){
+        public Builder location(Location location) {
             this.location = location;
+            return this;
+        }
+
+        public Builder hostUserId(String hostUserId) {
+            this.hostUserId = hostUserId;
             return this;
         }
 
@@ -107,6 +119,10 @@ public class Room {
 
     public Location getLocation() {
         return location;
+    }
+
+    public String getHostUserId() {
+        return hostUserId;
     }
 
     public void setImages(List<Image> images) {
