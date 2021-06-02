@@ -1,9 +1,6 @@
 package airbnb.dto;
 
-import airbnb.domain.Location;
-import airbnb.domain.Room;
-import airbnb.domain.RoomDetail;
-import airbnb.domain.Tax;
+import airbnb.domain.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RoomResponse {
@@ -12,7 +9,6 @@ public class RoomResponse {
     private final int price;
     private final String title;
     private final String description;
-    private final Host host;
     private final ImageResponse images;
     private final int grade;
     private final int reviewCount;
@@ -27,7 +23,6 @@ public class RoomResponse {
         this.price = builder.price;
         this.title = builder.title;
         this.description = builder.description;
-        this.host = builder.host;
         this.images = builder.images;
         this.grade = builder.grade;
         this.reviewCount = builder.reviewCount;
@@ -45,7 +40,6 @@ public class RoomResponse {
         private int grade;
         private int reviewCount;
         private Tax tax;
-        private Host host;
         private RoomDetail roomDetail;
         private Location location;
 
@@ -94,11 +88,6 @@ public class RoomResponse {
             return this;
         }
 
-        public Builder host(Host host) {
-            this.host = host;
-            return this;
-        }
-
         public Builder roomDetail(RoomDetail roomDetail) {
             this.roomDetail = roomDetail;
             return this;
@@ -124,10 +113,6 @@ public class RoomResponse {
 
     public String getDescription() {
         return description;
-    }
-
-    public Host getHost() {
-        return host;
     }
 
     public ImageResponse getImages() {

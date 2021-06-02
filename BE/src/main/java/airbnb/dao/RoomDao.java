@@ -1,9 +1,6 @@
 package airbnb.dao;
 
-import airbnb.domain.City;
-import airbnb.domain.Cost;
-import airbnb.domain.Room;
-import airbnb.domain.Schedule;
+import airbnb.domain.*;
 import airbnb.mapper.ImageMapper;
 import airbnb.mapper.RoomMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -60,7 +57,7 @@ public class RoomDao {
                 "AND (a.price between :minCost AND :maxCost) " +
                 "AND (a.people >= :reservationPeopleCount) ");
 
-        if(cityId!=null){
+        if (cityId != null) {
             sql.append("AND (a.city_id = :cityId)");
         }
 
@@ -81,3 +78,4 @@ public class RoomDao {
         return rooms;
     }
 }
+
