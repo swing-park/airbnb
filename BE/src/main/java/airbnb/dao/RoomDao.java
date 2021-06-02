@@ -31,7 +31,7 @@ public class RoomDao {
     }
 
     public List<Room> findAll() {
-        String sql = "SELECT id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax FROM room";
+        String sql = "SELECT id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude FROM room";
         List<Room> rooms = jdbcTemplate.query(sql, roomMapper);
         rooms.forEach(room -> room.setImages(imageDao.findByRoomId(room.getId())));
         return rooms;
