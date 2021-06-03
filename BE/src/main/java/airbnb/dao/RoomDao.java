@@ -28,14 +28,14 @@ public class RoomDao {
     }
 
     public List<Room> findAll() {
-        String sql = "SELECT id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room";
+        String sql = "SELECT id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room";
         List<Room> rooms = jdbcTemplate.query(sql, roomMapper);
         rooms.forEach(room -> room.setImages(imageDao.findByRoomId(room.getId())));
         return rooms;
     }
 
     public List<Room> findByCityIdAndSchedule(Long cityId, Schedule schedule) {
-        String sql = "SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+        String sql = "SELECT a.id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
                 "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut)))" +
                 "AND (a.city_id = :cityId)";
 
@@ -52,7 +52,7 @@ public class RoomDao {
     }
 
     public List<Room> findSearchRooms(Long cityId, Schedule schedule, Cost cost, int reservationPeopleCount) {
-        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
                 "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut))) " +
                 "AND (a.price between :minCost AND :maxCost) " +
                 "AND (a.people >= :reservationPeopleCount) ");
