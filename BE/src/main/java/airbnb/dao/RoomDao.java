@@ -77,5 +77,16 @@ public class RoomDao {
         rooms.forEach(room -> room.setImages(imageDao.findByRoomId(room.getId())));
         return rooms;
     }
+
+    public List<Room> findReservationRoom(String userId){
+        String sql = "SELECT id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, " +
+                "wifi, clean_tax, latitude, longitude, host_user FROM room JOIN reservation ON room.id = reservation.room_id " +
+                "WHERE reservation.room_id = :userId";
+
+        parameter.addValue("userId", userId);
+        List<Room> rooms = jdbcTemplate.query(sql.toString(), parameter, roomMapper);
+        rooms.forEach(room -> room.setImages(imageDao.findByRoomId(room.getId())));
+        return rooms;
+    }
 }
 
