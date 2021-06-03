@@ -68,11 +68,10 @@ create table user(
 
 drop table wish_list;
 create table wish_list(
-    id int not null auto_increment,
     room_id int not null,
     user_id varchar(45) not null,
     save tinyint(1) not null default 1,
-    primary key (id),
+    primary key (room_id,user_id),
     foreign key (room_id) references room(id),
     foreign key (user_id) references `user`(id)
 );

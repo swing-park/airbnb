@@ -2,6 +2,7 @@ package airbnb.dao;
 
 import airbnb.domain.User;
 import airbnb.dto.ReservationRequest;
+import airbnb.dto.WishRequest;
 import airbnb.mapper.UserMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,6 +35,14 @@ public class UserDao {
         parameter.addValue("roomId", reservationRequest.getRoomId());
         parameter.addValue("checkIn", reservationRequest.getSchedule().getCheckIn());
         parameter.addValue("checkOut", reservationRequest.getSchedule().getCheckOut());
+        jdbcTemplate.update(sql,parameter);
+    }
+
+    public void wish(String userId, WishRequest wishRequest){
+        String sql = "INSERT INTO wish_list(room_Id,user_Id) " +
+                "VALUE (:roomId,:userId)";
+        parameter.addValue("userId",userId);
+        parameter.addValue("roomId", wishRequest.getRoomId());
         jdbcTemplate.update(sql,parameter);
     }
 }
