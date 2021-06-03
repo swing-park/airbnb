@@ -1,6 +1,7 @@
 package airbnb.dao;
 
 import airbnb.domain.User;
+import airbnb.dto.ReservationRequest;
 import airbnb.mapper.UserMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,5 +24,16 @@ public class UserDao {
                 "WHERE user.id = :userId";
         parameter.addValue("userId", userId);
         return jdbcTemplate.queryForObject(sql,parameter,userMapper);
+    }
+
+    public void reservation(String userId, ReservationRequest reservationRequest){
+        String sql = "INSERT INTO reservation(user_Id, people, room_id, check_in, check_out) " +
+                "VALUE (:userId,:people,:roomId, :checkIn, :checkOut)";
+        parameter.addValue("userId", userId);
+        parameter.addValue("people", reservationRequest.getPeopleCount());
+        parameter.addValue("roomId", reservationRequest.getRoomId());
+        parameter.addValue("checkIn", reservationRequest.getSchedule().getCheckIn());
+        parameter.addValue("checkOut", reservationRequest.getSchedule().getCheckOut());
+        jdbcTemplate.update(sql,parameter);
     }
 }
