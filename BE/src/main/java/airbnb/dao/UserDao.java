@@ -27,7 +27,7 @@ public class UserDao {
     }
 
     public void reservation(String userId, ReservationRequest reservationRequest){
-        String sql = "INSERT INTO reservation(user_Id, people, room_id, check_in, check_out) " +
+        String sql = "INSERT INTO reservation(user_Id, people_count, room_id, check_in, check_out) " +
                 "VALUE (:userId,:people,:roomId, :checkIn, :checkOut)";
         parameter.addValue("userId", userId);
         parameter.addValue("people", reservationRequest.getPeopleCount());
