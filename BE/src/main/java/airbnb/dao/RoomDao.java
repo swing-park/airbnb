@@ -35,7 +35,7 @@ public class RoomDao {
     }
 
     public List<Room> findByCityIdAndSchedule(Long cityId, Schedule schedule) {
-        String sql = "SELECT a.id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+        String sql = "SELECT a.id, price, title, description, a.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
                 "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut)))" +
                 "AND (a.city_id = :cityId)";
 
@@ -52,7 +52,7 @@ public class RoomDao {
     }
 
     public List<Room> findSearchRooms(Long cityId, Schedule schedule, Cost cost, int reservationPeopleCount) {
-        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
+        StringBuilder sql = new StringBuilder("SELECT a.id, price, title, description, a.people, oneroom, bed, bath, hair_dryer, air_conditioner, wifi, clean_tax, latitude, longitude, host_user FROM room AS a left join reservation AS b ON a.id = b.room_id " +
                 "WHERE (b.id IS NULL OR ((b.check_in NOT BETWEEN :checkIn AND :checkOut) AND (b.check_out NOT BETWEEN :checkIn AND :checkOut))) " +
                 "AND (a.price between :minCost AND :maxCost) " +
                 "AND (a.people >= :reservationPeopleCount) ");
@@ -79,9 +79,9 @@ public class RoomDao {
     }
 
     public List<Room> findReservationRoom(String userId){
-        String sql = "SELECT id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, " +
+        String sql = "SELECT room.id, price, title, description, room.people, oneroom, bed, bath, hair_dryer, air_conditioner, " +
                 "wifi, clean_tax, latitude, longitude, host_user FROM room JOIN reservation ON room.id = reservation.room_id " +
-                "WHERE reservation.room_id = :userId";
+                "WHERE reservation.user_id = :userId";
 
         parameter.addValue("userId", userId);
         List<Room> rooms = jdbcTemplate.query(sql.toString(), parameter, roomMapper);
