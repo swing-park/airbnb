@@ -1,4 +1,4 @@
-const baseURL: string = "http://54.180.21.249/";
+const baseURL: string = " http://3.36.7.29/";
 
 const getApi = {
   main: () => fetch(`${baseURL}`),
